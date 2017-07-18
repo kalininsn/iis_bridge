@@ -184,6 +184,13 @@ def get_site_names():
     output = config.run(cmd, errMsg="You need elevated permissions.")
     return [str(line.split('"')[1]) for line in output.splitlines()]
 
+def get_site_ids():
+    """ returns a list of dicts with site names and ids """
+    cmd = "%s list sites" % config.APP_CMD
+    output = config.run(cmd, errMsg="You need elevated permissions.")
+    return [{'name': str(line.split('"')[1]),
+             'id': str(line.split('(')[1].split(',')[0].split(':')[1])}\
+              for line in output.splitlines()]
 
 def install_wcf(components="all"):
     """ install wcf services
